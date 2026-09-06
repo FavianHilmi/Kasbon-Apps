@@ -26,6 +26,10 @@ export default function DashboardPage() {
   const [editingDebt, setEditingDebt] = useState<Debt | null>(null);
   const [isGrouped, setIsGrouped] = useState(false);
 
+  const onToggleGroup = () => {
+    setIsGrouped(!isGrouped);
+  }
+
   const supabase = createClient();
 
   const [confirmState, setConfirmState] = useState<{
@@ -216,43 +220,30 @@ export default function DashboardPage() {
       <Navbar userEmail={userEmail} />
 
       <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
-        <SummaryCards totalOwedToMe={totalOwedToMe} totalIOwe={totalIOwe} />
+  <SummaryCards totalOwedToMe={totalOwedToMe} totalIOwe={totalIOwe} />
 
-        <div className="mt-6">
-          <DebtChart totalOwedToMe={totalOwedToMe} totalIOwe={totalIOwe} />
-        </div>
+  <div className="mt-6">
+    <DebtChart totalOwedToMe={totalOwedToMe} totalIOwe={totalIOwe} />
+  </div>
 
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex-1">
-            <FilterBar
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              dateFilter={dateFilter}
-              onDateChange={setDateFilter}
-              statusFilter={statusFilter}
-              onStatusChange={setStatusFilter}
-              typeFilter={typeFilter}
-              onTypeChange={setTypeFilter}
-              onOpenAddModal={() => {
-                setEditingDebt(null);
-                setIsModalOpen(true);
-              }}
-            />
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setIsGrouped(!isGrouped)}
-            title={isGrouped ? "Mode List Normal" : "Group per Orang"}
-            className="flex items-center gap-2 rounded-xl border border-slate-300 bg-sky-600 px-3.5 py-2 text-sm text-white hover:bg-sky-700 hover:cursor-pointer"
-          >
-            {isGrouped ? (
-              <List className="h-4 w-4" />
-            ) : (
-              <Users className="h-4 w-4" />
-            )}
-          </button>
-        </div>
+  <div className="mt-8">
+    <FilterBar
+      searchQuery={searchQuery}
+      onSearchChange={setSearchQuery}
+      dateFilter={dateFilter}
+      onDateChange={setDateFilter}
+      statusFilter={statusFilter}
+      onStatusChange={setStatusFilter}
+      typeFilter={typeFilter}
+      onTypeChange={setTypeFilter}
+      onOpenAddModal={() => {
+        setEditingDebt(null);
+        setIsModalOpen(true);
+      }}
+      isGrouped={isGrouped}
+      onToggleGroup={onToggleGroup}
+    />
+  </div>
 
         <div className="mt-6 flex flex-col gap-3">
           {loading ? (
@@ -307,7 +298,7 @@ export default function DashboardPage() {
                 debt={debt}
                 onToggleStatus={() => handleRequestToggleStatus(debt)}
                 onDelete={() => handleRequestDelete(debt)}
-                onEdit={(handleEdit) => {
+                onEdit={() => {
                   setEditingDebt(debt);
                   setIsModalOpen(true);
                 }}

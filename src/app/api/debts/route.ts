@@ -76,8 +76,8 @@ export async function POST(request: NextRequest) {
     if (!counterpart_name || typeof counterpart_name !== 'string' || !counterpart_name.trim()) {
       return NextResponse.json({ error: 'Nama orang wajib diisi.' }, { status: 400 });
     }
-    if (!amount || typeof amount !== 'number' || amount <= 0) {
-      return NextResponse.json({ error: 'Jumlah nominal harus lebih dari 0.' }, { status: 400 });
+    if (!amount || typeof amount !== 'number' || amount <= 1000) {
+      return NextResponse.json({ error: 'Jumlah nominal minimal Rp 1.000.' }, { status: 400 });
     }
     if (note && note.length > 200) {
       return NextResponse.json({ error: 'Catatan tidak boleh lebih dari 200 karakter.' }, { status: 400 });

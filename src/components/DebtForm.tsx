@@ -53,8 +53,8 @@ export function DebtForm({
       setErrorMsg("Nama orang wajib diisi.");
       return;
     }
-    if (!numAmount || numAmount <= 0) {
-      setErrorMsg("Jumlah nominal harus lebih dari 0.");
+    if (!numAmount || numAmount <= 1000) {
+      setErrorMsg("Jumlah nominal minimal Rp 1.000.");
       return;
     }
 
@@ -141,7 +141,7 @@ export function DebtForm({
 
           <div>
             <label className="block text-xs font-medium text-slate-700">
-              Nama Orang *
+              Nama Orang <span className="text-rose-500">*</span>
             </label>
             <input
               type="text"
@@ -154,12 +154,11 @@ export function DebtForm({
 
           <div>
             <label className="block text-xs font-medium text-slate-700">
-              Jumlah Nominal (Rp) *
+              Jumlah Nominal (Rp) <span className="text-rose-500">*</span>
             </label>
             <input
               type="number"
               required
-              min="1"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               className="mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
