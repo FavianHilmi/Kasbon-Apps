@@ -16,6 +16,7 @@ interface DebtCardProps {
   onToggleStatus: (debt: Debt) => void;
   onEdit: (debt: Debt) => void;
   onDelete: (id: string) => void;
+  isGrouped?: boolean;
 }
 
 export function DebtCard({
@@ -23,6 +24,7 @@ export function DebtCard({
   onToggleStatus,
   onEdit,
   onDelete,
+  isGrouped = false,
 }: DebtCardProps) {
   const isSettled = debt.settled_at !== null;
   const isOwedToMe = debt.type === "owed_to_me";
@@ -36,7 +38,6 @@ export function DebtCard({
       }`}
     >
       <div className="flex items-start gap-3">
-        {/* Icon Tipe */}
         <div
           className={`mt-0.5 rounded-xl p-2.5 ${
             isOwedToMe
@@ -52,9 +53,11 @@ export function DebtCard({
         </div>
 
         <div>
-          <div className="flex items-center gap-2">
+          {!isGrouped && (
+            <div className="flex items-center gap-2">
             <h3 className="font-semibold text-gray-600">{debt.counterpart_name}</h3>
           </div>
+          )}
 
           <p className="mt-1 text-xs text-gray-500">
             {isOwedToMe ? "Dihutang ke saya" : "Saya hutang"} •{" "}

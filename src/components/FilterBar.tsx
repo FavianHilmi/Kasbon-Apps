@@ -6,6 +6,8 @@ import { Search, Plus, Filter } from "lucide-react";
 interface FilterBarProps {
   searchQuery: string;
   onSearchChange: (value: string) => void;
+  dateFilter: string;
+  onDateChange: (value: string) => void;
   statusFilter: string;
   onStatusChange: (value: string) => void;
   typeFilter: string;
@@ -16,6 +18,8 @@ interface FilterBarProps {
 export function FilterBar({
   searchQuery,
   onSearchChange,
+  dateFilter,
+  onDateChange,
   statusFilter,
   onStatusChange,
   typeFilter,
@@ -46,6 +50,17 @@ export function FilterBar({
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
+        {/* Sorting tanggal */}
+        <select
+          value={dateFilter}
+          onChange={(e) => onDateChange(e.target.value)}
+          className="rounded-xl border border-gray-400 bg-white px-3 py-2 text-sm font-medium text-slate-700 focus:outline-none hover:cursor-pointer"
+        >
+          <option value="newest">Terbaru</option>
+          <option value="oldest">Terlama</option>
+          <option value="amount_high">Jumlah Tertinggi</option>
+          <option value="amount_low">Jumlah Terendah</option>
+        </select>
         {/* Dropdown Status */}
         <select
           value={statusFilter}
