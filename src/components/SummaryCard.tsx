@@ -15,7 +15,7 @@ export function SummaryCards({ totalOwedToMe, totalIOwe }: SummaryCardsProps) {
       {/* Card 1: Dihutang ke Saya */}
       <div className="w-[80%] min-w-60 shrink-0 snap-center rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-all sm:w-auto sm:min-w-0">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold text-slate-500">
+          <span className="text-md font-semibold text-slate-400">
             Dihutang ke Saya
           </span>
           <div className="rounded-full bg-emerald-100 p-2 text-emerald-600">
@@ -30,7 +30,7 @@ export function SummaryCards({ totalOwedToMe, totalIOwe }: SummaryCardsProps) {
       {/* Card 2: Saya Hutang */}
       <div className="w-[80%] min-w-60 shrink-0 snap-center rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-all sm:w-auto sm:min-w-0">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold text-slate-500">
+          <span className="text-md font-semibold text-slate-400">
             Saya Hutang
           </span>
           <div className="rounded-full bg-rose-100 p-2 text-rose-600">
@@ -45,7 +45,7 @@ export function SummaryCards({ totalOwedToMe, totalIOwe }: SummaryCardsProps) {
       {/* Card 3: NET (Selisih) */}
       <div className="w-[80%] min-w-60 shrink-0 snap-center rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-all sm:w-auto sm:min-w-0">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold text-slate-500">
+          <span className="text-md font-semibold text-slate-400">
             NET (Selisih)
           </span>
           <div className="rounded-full bg-sky-100 p-2 text-sky-600">

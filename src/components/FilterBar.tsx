@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
-import { Search, Plus, Filter } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Search, Plus, Filter } from "lucide-react";
 
 interface FilterBarProps {
   searchQuery: string;
@@ -21,6 +22,15 @@ export function FilterBar({
   onTypeChange,
   onOpenAddModal,
 }: FilterBarProps) {
+  const [search, setSearch] = useState(searchQuery);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onSearchChange(search);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search, onSearchChange]);
+
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       {/* Search Input */}
@@ -28,8 +38,8 @@ export function FilterBar({
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-800" />
         <input
           type="text"
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           placeholder="Cari nama orang..."
           className="w-full rounded-xl border border-gray-400 bg-white py-2 pl-9 pr-4 text-sm font-medium placeholder-gray-700 transition-all  focus:outline-none focus:ring-1 focus:ring-slate-400"
         />
