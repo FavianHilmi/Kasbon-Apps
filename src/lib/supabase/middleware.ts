@@ -27,21 +27,21 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // Ambil user aktif dari Supabase
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isAuthPage = request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/register');
+  const isAuthPage =
+    request.nextUrl.pathname.startsWith('/login') ||
+    request.nextUrl.pathname.startsWith('/register');
 
-  // 1. Kalau BELUM login dan mencoba akses halaman terproteksi -> lempar ke /login
   if (!user && !isAuthPage) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
+    url.searchParams.set('error', 'unauthorized');
     return NextResponse.redirect(url);
   }
 
-  // 2. Kalau SUDAH login tapi malah buka /login atau /register -> lempar ke dashboard (/)
   if (user && isAuthPage) {
     const url = request.nextUrl.clone();
     url.pathname = '/';

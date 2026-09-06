@@ -26,17 +26,22 @@ export default function RegisterPage() {
       return;
     }
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
+    const cleanEmail = email.trim();
+
+    const { data, error } = await supabase.auth.signUp({
+      email: cleanEmail,
+      password: password,
     });
 
     if (error) {
+      console.error('Register Error:', error);
       setErrorMsg(error.message || 'Gagal mendaftar akun.');
       setLoading(false);
-    } else {
-      router.push('/');
-      router.refresh();
+      return;
+    }
+    if (data.user) {
+      await supabase.auth.signOut();
+      router.push("/login?registered=true");
     }
   };
 
@@ -55,7 +60,9 @@ export default function RegisterPage() {
 
         <form onSubmit={handleRegister} className="mt-6 flex flex-col gap-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700">Email</label>
+            <label className="block text-sm font-medium text-slate-700">
+              Email
+            </label>
             <input
               type="email"
               required
@@ -67,7 +74,9 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700">Password (min 6 karakter)</label>
+            <label className="block text-sm font-medium text-slate-700">
+              Password (min 6 karakter)
+            </label>
             <input
               type="password"
               required
@@ -90,8 +99,11 @@ export default function RegisterPage() {
         </form>
 
         <p className="mt-6 text-center text-sm text-slate-500">
-          Sudah punya akun?{' '}
-          <Link href="/login" className="font-semibold text-sky-800 hover:underline">
+          Sudah punya akun?{" "}
+          <Link
+            href="/login"
+            className="font-semibold text-sky-800 hover:underline"
+          >
             Masuk di sini
           </Link>
         </p>
